@@ -23,10 +23,29 @@ class App extends React.Component{
   componentDidMount() {
     /* This method monitors auth changes and fireups a callback during 
       a initial load and when auth state or user changes.
-      When no user is logged in then user is null
+      When no user is logged in then userAuth is null
     */
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({ currentUser: user });
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      if(userAuth){
+        const userRef = await createUserProfileDocument(userAuth);
+
+        /* onSnapShot method runs on a document reference of userAuth object 
+        and returns the snapShot or the actual data present in the document*/
+        userRef.onSnapshot(snapShot => {
+          this.setState(
+            {
+              currentUser: {
+                id : snapShot.id,
+                ...snapShot.data()
+              }
+            });
+
+            console.log(this.state);
+
+          });
+        }else{
+          this.setState({currentUser : userAuth });
+        }
     });
   }
 
