@@ -1,8 +1,6 @@
-let objects = [
-    {id : 1, name : 'spiderman'},
-    {id : 2, name : 'doctor-strange'},
-    {id : 3, name : 'hulk'}
-];
+let appState = 'loading'
 
-const result = objects.filter((item,index) => index > 0);
-console.log(result);
+const app = {
+    [appState]: true,
+}
+console.log(app['loading']);
