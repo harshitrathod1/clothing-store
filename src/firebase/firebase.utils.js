@@ -13,7 +13,41 @@ const config = {
     measurementId: "G-JZB6KDEDQP"
 };
 
+//pass the config object to firebase object
 firebase.initializeApp(config);
+
+/* - Async function that creates a new entry for user if not already present in firestore db 
+   - There are always two kind of objects returned by firebase i.e. reference objects and Snapshots objects.
+   - Document references are just mere reference(address) that don't contain actual information.
+   Snapshot do contain actual information.
+*/
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+    if(!userAuth) return;
+
+    /* Reference to user document present in firestore db*/
+    const userRef = firestore.doc(`users/${userAuth.uid}`);
+    /* We use Reference object to do all CRUD operations. Here we are fetching snapshot object
+    for specific query*/
+    const snapShot = await userRef.get();
+
+    /* Create a new Entry if user details not present in firestore db*/
+    if(!snapShot.exists){
+        const  {displayName, email} = userAuth; // user details from user auth object
+        const createdAt = new Date(); // current Date
+        try{
+            await userRef.set({
+                displayName,
+                email,
+                createdAt,
+                ...additionalData
+            });
+        }catch(err){
+            console.log('error creating user', err.message);
+        }
+    }
+
+    return userRef;
+};
 
 /* Export out the things needed to used since firebase is heavy library */
 export const auth = firebase.auth();

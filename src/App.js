@@ -7,11 +7,8 @@ import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import HomePage from './pages/homepage/homepage.component'
-import { auth } from './firebase/firebase.utils';
- /* This method monitors auth changes and fireups a callback during 
-      a initial load and when auth state or user changes.
-      When no user is logged in then user is null
-    */
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+ 
 class App extends React.Component{
   constructor() {
     super();
@@ -24,6 +21,10 @@ class App extends React.Component{
   unsubscribeFromAuth = null;
 
   componentDidMount() {
+    /* This method monitors auth changes and fireups a callback during 
+      a initial load and when auth state or user changes.
+      When no user is logged in then user is null
+    */
     this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
       this.setState({ currentUser: user });
     });
