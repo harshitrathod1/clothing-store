@@ -1,8 +1,11 @@
 import React from 'react';
-import './header.styles.scss'
+
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import { auth } from '../../firebase/firebase.utils';
+
+import './header.styles.scss';
 
 const Header = ({ currentUser }) => {
     return(
@@ -32,4 +35,15 @@ const Header = ({ currentUser }) => {
     );
 }
 
-export default Header;
+/* To get the value of currentUser from the root reducer function 
+    This function return the data from the store that particular
+    component needs
+*/
+const mapStateToProps = (state) => ({
+    currentUser : state.user.currentUser
+})
+
+/* Connect is a higher order function which takes two functional args i.e. 
+mapStateToProps,Component */
+
+export default connect(mapStateToProps)(Header);
