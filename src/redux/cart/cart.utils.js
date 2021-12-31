@@ -1,9 +1,9 @@
 //Function that add items to cart
 export const addItemsToCart = (cartItems, cartItemToAdd) => {
-    //check if the item is already present in the cart
+    //check if the item is already present in the cart    
     const existingCartItem = cartItems.find(
-        cartItem => cartItem.id = cartItemToAdd.id
-        );
+        cartItem => cartItem.id === cartItemToAdd.id
+    );
     
     //if present then return new array while only increasing the quantity of match item
     if (existingCartItem) {
