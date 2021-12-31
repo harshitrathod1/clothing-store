@@ -7,6 +7,7 @@ export const addItemsToCart = (cartItems, cartItemToAdd) => {
     
     //if present then return new array while only increasing the quantity of match item
     if (existingCartItem) {
+
         return cartItems.map(cartItem =>
             cartItem.id = cartItemToAdd.id 
             ? {...cartItem, quantity : cartItem.quantity + 1} 
