@@ -1,17 +1,19 @@
-let items = {
-  'cart' : {
-    'quantity' : 2,
-    'hidden' : true,
-    'cartItems' : [11,22,33,44]
+let items = [
+  {
+    id : 1,
+    qty : 2
   },
-  'user' : {
-    'name' : 'Alex',
-    'age' : 22,
-    'lang' : 'EN'
+  {
+    id : 2,
+    qty : 3
+  },
+  {
+    id : 3,
+    qty : 1
   }
-};
+]
 
-let { cart: { cartItems } } = items;
+const itemCount = items.reduce((accumulated,cartItem) => accumulated + cartItem.qty,0);
 
-console.log(cartItems);
+console.log(itemCount);
 
