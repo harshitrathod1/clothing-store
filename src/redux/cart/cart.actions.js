@@ -2,7 +2,7 @@ import CartActionTypes from './cart.types';
 
 //A function that actually changes the state for particular reducer by returning fresh state
 //object
-const toggleCartHidden = () => {
+export const toggleCartHidden = () => {
     return({
         type : CartActionTypes.TOGGLE_CART_HIDDEN,
     })
@@ -11,6 +11,20 @@ const toggleCartHidden = () => {
 export const addItem = (item) => {
     return ({
         type : CartActionTypes.ADD_ITEM,
+        payload : item
+    })
+}
+
+export const clearItemFromCart = (item) => {
+    return({
+        type : CartActionTypes.CLEAR_ITEM_FROM_CART,
+        payload : item
+    })
+};
+
+export const removeItem = (item) => {
+    return({
+        type : CartActionTypes.REMOVE_ITEM,
         payload : item
     })
 }
