@@ -26,6 +26,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
     /* Reference to user document present in firestore db*/
     const userRef = firestore.doc(`users/${userAuth.uid}`);
+    
     /* We use Reference object to do all CRUD operations. Here we are fetching snapshot object
     for specific query*/
     const snapShot = await userRef.get();
@@ -48,6 +49,25 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
     return userRef;
 };
+
+/*
+    Add new Collection with documents to the firestore account
+*/
+export const addCollectionAndDocuments = async ( collectionKey, objectsToAdd ) => {
+    const collectionRef = firestore.collection(collectionKey);
+
+    /* this batch object provides functionality to transfer all the data at once
+        or don't pass it at all
+    */
+    const batch = firestore.batch();
+    objectsToAdd.forEach(obj => {
+        // Get or create doc ref inside a given collection
+        const newDocRef = collectionRef.doc();
+        batch.set(newDocRef, obj);
+    });
+
+    return await batch.commit();
+}
 
 /* Export out the things needed to used since firebase is heavy library */
 export const auth = firebase.auth();

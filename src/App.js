@@ -21,8 +21,7 @@ class App extends React.Component{
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-
-    const {setCurrentUser} = this.props;
+    const { setCurrentUser } = this.props;
 
     /* This method monitors auth changes and fireups a callback during 
       a initial load and when auth state or user changes.
@@ -47,6 +46,8 @@ class App extends React.Component{
           setCurrentUser(userAuth);
         }
     });
+
+
   }
 
   componentWillUnmount() {
@@ -76,7 +77,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => {
   return({
-    setCurrentUser : user => dispatch(setCurrentUser(user))
+    setCurrentUser : user => dispatch(setCurrentUser(user)),
   })
 };
 
