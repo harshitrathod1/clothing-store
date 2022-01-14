@@ -88,15 +88,26 @@ export const addCollectionAndDocuments = async ( collectionKey, objectsToAdd ) =
     return await batch.commit();
 }
 
+export const getCurrentUser = () => {
+    return new Promise((resolve,reject) => {
+        const unsubscribe = auth.onAuthStateChanged(userAuth => {
+            /* This is an example of javascript recursion
+            Link : https://stackoverflow.com/questions/47043188/firebase-onauthstatechanged-unsubscribe-recursion */
+            unsubscribe();
+            resolve(userAuth);
+        },reject)
+    })
+}
+
 /* Export out the things needed to used since firebase is heavy library */
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 /* Set up the provider(s) you want to specify for login functionality*/
-const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({ prompt : 'select_account' });
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt : 'select_account' });
 
 /* Sign In with Google Account functionality */
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 
 export default firebase;

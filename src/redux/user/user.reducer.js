@@ -8,10 +8,17 @@ const INITIAL_STATE = {
 //Actual Reducer Function : set the current user details to the state
 const userReducer = (currentState = INITIAL_STATE,action) => {
     switch(action.type) {
-        case userActionTypes.SET_CURRENT_USER :
+        case userActionTypes.SIGN_IN_SUCCESS :
             return {
                 ...currentState,
-                currentUser : action.payload
+                currentUser : action.payload,
+                error : null
+            };
+        
+        case userActionTypes.SIGN_IN_FAILURE :
+            return {
+                ...currentState,
+                error : action.payload
             };
         default:
             return currentState;
